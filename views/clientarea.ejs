@@ -1,0 +1,38 @@
+<head>
+  <title>Coffe2Night</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <link rel="icon" type="image/x-icon" href="./src/img/coffe2night.png">
+        <link rel="stylesheet" type="text/css" href="./src/css/clientarea.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <script type="text/javascript" src="/src/js/security.js"> </script>
+</head>
+
+<body>
+    
+    <div class="flex-container">
+  <div class="content-container">
+  <div class="form-container">
+  
+  <script>
+    
+  const data = document.cookie
+  const ud = data.split(';')[0]
+  
+  const userData = ud.split("=").pop();
+    
+  document.write(`<h1>Bem vindo</h1> \n <h2>${userData}</h2>`)
+    
+  </script>
+      <a href="/chat" class="buttonp"><center><br>Chat</center></a>
+      <a href="/logout" class="buttonp"><center><br>Logout</center></a>
+
+    </div>
+    
+
+
+    
+      </div>
+
+
+   
+</body>

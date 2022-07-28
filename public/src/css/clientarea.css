@@ -1,0 +1,76 @@
+body {
+  
+ background-image: url("../img/indexbackground.png");
+ background-size:cover;
+
+
+}
+
+
+h1 {
+    font-family: "Lucida Console", "Courier New", monospace;
+    color: white;
+}
+
+
+h2 {
+    font-family: "Lucida Console", "Courier New", monospace;
+    color: white;
+}
+
+
+.buttonp {
+  text-align: center;
+  display:inline-block;
+  cursor: pointer;
+
+  border: none;
+  border-radius: 15px;
+
+  box-shadow: 2px 2px 7px #38d39f70;
+
+  background: #38d39f;
+  color: rgba(255, 255, 255, 0.8);
+	text-decoration: none;
+  height: 49px;
+  width: 98px;
+  transition: all 1s;
+}
+
+.buttonp:hover {
+  color: rgb(255, 255, 255);
+
+  box-shadow: none;
+}
+
+
+.form-container {
+  
+  height: 200px;
+  width: 600px;
+
+  margin-top: 13px;
+  padding-top: 25px;
+
+  border-radius: 12px;
+
+
+  justify-content: center;
+  flex-direction: column;
+
+  background: #1f1f1f;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.199);
+}
+
+.subtitle {
+  font-size: 11px;
+
+  color: rgba(177, 177, 177, 0.3);
+}
+
+
+
+body {
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+} 

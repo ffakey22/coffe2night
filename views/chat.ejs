@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+
+ 
+     <title>Coffe2Night</title>
+           <link rel="icon" type="image/x-icon" href="./src/img/coffe2night.png">
+           <link rel="stylesheet" type="text/css" href="./src/css/chat.css" />
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+           <script type="text/javascript" src="/src/js/security.js"> </script>
+  
+
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form action="">
+    <input id="m" autocomplete="off"/><button>Enviar</button>
+    </form>
+
+  
+
+
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+
+  const data = document.cookie //Pega o valor que está dentro dos cookies
+  const ud = data.split(';')[0] //Tira todo texto apartir do simbolo ";"
+  
+  const userData = ud.split("=").pop(); //Tira tudo que estiver antes do simbolo "="
+  
+
+  //Obs:fiz isso porque o document.cookie.userData (userData é o nome de usuario.) não estava funcionando
+  //Ate hoje não descobri porque mas ja que não funciona eu usei essa gambiarra ai SKSKSKSK
+
+
+      $(function () {
+        var socket = io();
+
+
+        socket.emit('user chat', userData) //Emite nome de usuario pro servidor backend
+
+        $('form').submit(function(){
+          var msgqf = document.getElementById("m").value; //Pega oque está dentro do elemento M (no caso vai ser a mensagem.)
+          const msgf = `${userData}: ${msgqf}` //Adiciona o nome de usuario a mensagem.
+          socket.emit('chat message', msgf); //Envia a mensagem pro servidor backend
+          $('#m').val('');
+          return false;
+        });
+
+
+        //Atualiza a div messages para adicionar as mensagens que o servidor enviou.
+        socket.on('chat message', function(msg){
+          $('#messages').append($('<li>').text(msg))
+        
+          });
+
+   
+
+
+
+        //Mensagens do servidor
+        //Ps:Servidor backend envia uma mensagem pro frontend (socket.emit) e ele registra a mensagem que o server enviou aqui
+
+        //Utilizado para mensagens temporizadas e entrada e saida de usuarios.
+        socket.on('chat server', function(msg){
+          $('#messages').append($('<li>').text(`Server:${msg}`));
+        });
+
+      });
+
+
+
+
+
+      
+    </script>
+
+
+    </body>
