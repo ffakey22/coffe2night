@@ -5,7 +5,15 @@ const createError = require("http-errors"),
   fs = require("fs"),
   cookieParser = require("cookie-parser"),
   cors = require("cors"),
-  crypto = require("crypto");
+  crypto = require("crypto"),
+  logger = require("morgan"),
+  passport = require("passport"),
+  session = require("express-session");
+  
+  require('./database.js');
+
+require("./auth.js")(passport);
+
 const app = express();
 app.use(cors());
 app.set("views", path.join(__dirname, "views"));
@@ -14,8 +22,27 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(logger("dev"));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(
+  session({
+    secret: "123",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 60 * 60 * 1000 },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
+
 
 var server = http.createServer(app);
 var io = require("socket.io")(server);
@@ -37,21 +64,7 @@ function armazenaMensagem(mensagem){
 io.on("connection", function (socket) {
 
 
-  socket.on("ondb", function (number) {
-  let database = JSON.parse(fs.readFileSync("./public/src/js/dbacess.json", "utf8"));
 
-  database = {
-    dba: number
-  }
-
-
-
-    fs.writeFile("./public/src/js/dbacess.json", JSON.stringify(database), (x) => {
-      if (x) console.error(x)
-    });
-
-
-  })
 
 
   socket.on("user chat", function (username) {

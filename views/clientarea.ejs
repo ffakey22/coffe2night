@@ -4,7 +4,6 @@
         <link rel="icon" type="image/x-icon" href="./src/img/coffe2night.png">
         <link rel="stylesheet" type="text/css" href="./src/css/clientarea.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-        <script type="text/javascript" src="/src/js/security.js"> </script>
 </head>
 
 <body>
@@ -17,11 +16,13 @@
     
   const data = document.cookie
   const ud = data.split(';')[0]
-  
+  const token = window.localStorage.getItem("authentication")
   const userData = ud.split("=").pop();
-    
-  document.write(`<h1>Bem vindo</h1> \n <h2>${userData}</h2>`)
-    
+
+  $.post("/home",{user: userData, token: token})
+  
+  document.write(`<h1>Bem vindo</h1> \n <h2><%=user%></h2>`)
+
   </script>
       <a href="/chat" class="buttonp"><center><br>Chat</center></a>
       <a href="/logout" class="buttonp"><center><br>Logout</center></a>

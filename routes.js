@@ -1,4 +1,6 @@
 const { application } = require("express");
+const passport = require("passport");
+const { appDistributionOrigin } = require("firebase-tools/lib/api.js");
 const indexRouter = require("./routes/index.js"),
   clientRouter = require("./routes/clientarea.js"),
   nFoundRouter = require("./routes/404.js"),
@@ -6,24 +8,24 @@ const indexRouter = require("./routes/index.js"),
   registerRouter = require("./routes/registro.js"),
   chatRouter = require("./routes/chat.js"),
   logoutRouter = require("./routes/logout.js"),
-  getUsersRouter = require("./apiRoutes/getDb.js"),
-  getSessionRouter = require("./routes/getsession.js");
+  mexistsRouter = require("./routes/emailexists.js"),
+  rsucessRouter = require("./routes/rsucess.js");
+
+  function authenticationMiddleware(req, res, next) {
+    if (req.isAuthenticated()) return next();
+    res.redirect('/login?fail=true');
+  }
 
 module.exports = (app) => {
   //USER ROUTES ->
-  app.use("/", indexRouter);
-  app.use("/home", clientRouter);
+  app.use("/",indexRouter);
+  app.use("/home",authenticationMiddleware, clientRouter);
   app.use("/404", nFoundRouter);
-  app.use("/registro", registerRouter);
-  app.use("/chat", chatRouter);
-  app.use("/logout", logoutRouter)
-
-//API ROUTES ->
-
-app.use("/getdb", getUsersRouter)
-app.use("/getsession", getSessionRouter)
-
-
+  app.use("/register", registerRouter);
+  app.use("/chat",authenticationMiddleware, chatRouter);
+  app.use("/logout", logoutRouter);
+  app.use("/exists", mexistsRouter);
+  app.use("/rsucess", rsucessRouter)
 
   //ERROR ROUTES ->
 
